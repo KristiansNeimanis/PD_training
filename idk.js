@@ -3,22 +3,35 @@ let delivery = document.getElementById("delivery");
 
 let selected = document.getElementById("select");
 
+let number = document.getElementById("number");
+let jokes = document.getElementById("jokes")
+
 let button = document.getElementById("generateBTN");
 
 button.addEventListener("click", async function () {
     console.log("clicked");
     let data;
 
-    if(selected.value == "twoLiner"){
-        data = await fetch("https://v2.jokeapi.dev/joke/Any?type=twopart");
-        let json = await data.json();
-        setup.innerHTML = json.setup.toString();
-        delivery.innerHTML = json.delivery.toString()
-    } else{
-        data = await fetch("https://v2.jokeapi.dev/joke/Any?type=single");
-        let json = await data.json();
-        setup.innerHTML = json.joke.toString();
-        delivery.innerHTML = null;
+    for (let index = 0; index < number.value; index++) {
+        let joke = document.createElement("li");
+
+        if(selected.value == "twoLiner"){
+            data = await fetch("https://v2.jokeapi.dev/joke/Any?type=twopart");
+            let json = await data.json();
+            setup.innerHTML = json.setup.toString();
+            delivery.innerHTML = json.delivery.toString()
+
+            joke.innerHTML = [setup.innerHTML + " ...|... " + delivery.innerHTML];
+        } else{
+            data = await fetch("https://v2.jokeapi.dev/joke/Any?type=single");
+            let json = await data.json();
+            setup.innerHTML = json.joke.toString();
+            delivery.innerHTML = null;
+
+            joke.innerHTML = [setup.innerHTML];
+        }
+        
+        jokes.append(joke);
     }
     
     console.log(json);
